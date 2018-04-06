@@ -382,6 +382,7 @@ section{
 
 		.inside #footer{
 			width: 100%;
+			position: relative;
 		}
 }
 @media only screen and (min-width: 601px) and (max-width: 900px){
@@ -481,6 +482,7 @@ section{
 
 		.inside #footer{
 			width: 100%;
+			position: relative;
 		}
 }
 @media only screen and (min-width: 901px){
@@ -590,5 +592,6 @@ section{
 		}
 		.inside #footer{
 			width: 100%;
+			position: relative;
 		}
 }
