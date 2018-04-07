@@ -1,11 +1,11 @@
-const CURRENT_VERSION = 4;
+const CURRENT_VERSION = "4.0.10";
 const CACHE_NAME = 'rr-cache-v' + CURRENT_VERSION;
 let urlsToCache = [
   '/',
   '/css/styles.css',
-  '/data/restaurants.json',
-  // '/index.html',
-  // '/restaurant.html',
+  '/restaurantdata',
+  '/index.html',
+  '/restaurant.html',
   '/js/dbhelper.js',
   '/js/index.js',
   '/js/main.js',
@@ -26,7 +26,7 @@ self.addEventListener('install', function(event) {
     caches.open(CACHE_NAME)
     .then((cache) => {
       log("cache opened", CACHE_NAME)
-      cache.addAll(urlsToCache)
+      return cache.addAll(urlsToCache)
     }).catch((error) => {
       log('error', error);
     })
@@ -54,7 +54,6 @@ self.addEventListener('fetch', (event) => {
         log('fulfilling ' + event.request.url + " from cache.");
         return response;
       } else {
-        log(event.request.url + ' not found in cache, fetching from network.');
         return fetch(event.request);
       }
     })
