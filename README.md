@@ -2,9 +2,7 @@
 ---
 
 
-Please clone the repository, then from root run
-npm install
-npm start
+Please clone the repository, then from the root directory containing 'server.js' run 'npm install & npm start'
 
 Then navigate to localhost:8000
 
