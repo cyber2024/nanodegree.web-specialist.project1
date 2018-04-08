@@ -54,6 +54,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
+  address.setAttribute('aria-label',`address: ${restaurant.address}`);
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
@@ -62,7 +63,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   let imageSources = DBHelper.imageUrlForRestaurant(restaurant);
   image.srcset = imageSources.srcset.toString();
   image.src = imageSources.src;
-  image.alt = imageSources.alt;
+  image.alt = `Image of ${restaurant.name} restaurant, image description: ${imageSources.alt}`;
 
 
   const cuisine = document.getElementById('restaurant-cuisine');
@@ -81,6 +82,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
+  let arialabel = 'Opening hours: ';
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
@@ -91,9 +93,10 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
     const time = document.createElement('td');
     time.innerHTML = operatingHours[key];
     row.appendChild(time);
-
+    arialabel += `${key}: ${operatingHours[key].replace('-','to').replace(':00','')}.\n`
     hours.appendChild(row);
   }
+  hours.setAttribute('aria-label', arialabel);
 }
 
 /**
@@ -103,6 +106,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
+  title.setAttribute('tabindex', 8);
   container.appendChild(title);
 
   if (!reviews) {
@@ -115,6 +119,10 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   reviews.forEach(review => {
     ul.appendChild(createReviewHTML(review));
   });
+  for(let i = 0; i < ul.children.length; i++){
+    let li = ul.children[i];
+    li.setAttribute('tabindex',8+i);
+  }
   container.appendChild(ul);
 }
 
@@ -138,7 +146,6 @@ createReviewHTML = (review) => {
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
   li.appendChild(comments);
-
   return li;
 }
 
@@ -149,6 +156,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
+  li.setAttribute('aria-current', 'page')
   breadcrumb.appendChild(li);
 }
 

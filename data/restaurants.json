@@ -315,7 +315,7 @@
     "id": 9,
     "name": "Mu Ramen",
     "neighborhood": "Queens",
-    "photograph": {"src": "9.jpg", "alt": "A black and white image of a wine bar"},
+    "photograph": {"src": "9.jpg", "alt": "A black and white image of a noodle bar"},
     "address": "1209 Jackson Ave, Queens, NY 11101",
     "latlng": {
       "lat": 40.743797,

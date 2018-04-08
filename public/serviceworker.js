@@ -47,13 +47,15 @@ self.addEventListener('activate', function(event) {
   );
 });
 self.addEventListener('fetch', (event) => {
+  let url = /restaurant.html\?.*?&?id=[a-zA-Z0-9]*&?.*?$/.test(event.request.url) ? '/restaurant.html': event.request;
   event.respondWith(
-    caches.match(event.request)
+    caches.match(url)
     .then((response) => {
       if (response) {
-        log('fulfilling ' + event.request.url + " from cache.");
+        log('Cache hit: ' + url);
         return response;
       } else {
+        log('Cache miss: ' + url);
         return fetch(event.request);
       }
     })

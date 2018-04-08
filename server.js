@@ -17,8 +17,10 @@ app.get('/restaurant.html', function(req,res){
   res.sendFile(path.join(process.cwd(),'/restaurant.html'));
 });
 app.get('/restaurantdata', function(req,res){
-
   res.sendFile(path.join(process.cwd(),'data','restaurants.json'));
+});
+app.get('/restaurantdata/:id', (req,res)=>{
+    console.log(res.query)
 });
 
 app.listen(app.get("port"), function(){
