@@ -8,9 +8,9 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    //const port = 8000 // Change this to your server port
-    // return `http://localhost:${port}/restaurantdata`;
-    return `/restaurantdata`;
+    const port = 1337 // Change this to your server port
+    return `http://localhost:${port}/restaurants`;
+    // return `/restaurantdata`;
   }
 
   /**
@@ -36,7 +36,7 @@ class DBHelper {
       .then(response=>{
         if(response.status == "200"){
           response.json().then((parsedResponse)=>{
-            callback(null, parsedResponse.restaurants);
+            callback(null, parsedResponse);
           })
         } else {
               const error = (`Request failed. Returned status of ${response.status}`);
@@ -167,9 +167,8 @@ class DBHelper {
    * this WILL FAIL if the required images sizes are not found at runtime
    */
   static imageUrlForRestaurant(restaurant) {
-    let filename = restaurant.photograph.src;
     //the image sizes that we will use
-    let imgSizes = ['_450_1x.jpg 450w', '_600_1x.jpg 600w', '_800_1x.jpg 800w', '_1200_2x.jpg 1200w']
+    let imgSizes = ['_450_1x.webp 450w', '_600_1x.webp 600w', '_800_1x.webp 800w', '_1200_2x.webp 1200w']
     //a simple split function to extract the number from the filename
     //an regexp could also be used
     /*
@@ -177,15 +176,16 @@ class DBHelper {
     * let match = /^([0-9]{1,2})\.(.*)$/g.exec(filename);
     * But lets not bother for now...
     */
-    let i = 0, filenumber = '', char;
-    while((char = filename[i++]) != undefined && !/\./.test(char))
-      filenumber += char;
+    //irrelevant now
+    // let i = 0, filenumber = '', char;
+    // while((char = filename[i++]) != undefined && !/\./.test(char))
+    //   filenumber += char;
     //now that the file number is extracted (grabbed anything before EOF and '.')
     //we can return the img source and the source set in one object.
+    let imgName = (restaurant.photograph ? restaurant.photograph : 1);
     return ({
-      src: '/img/'+filenumber+'_800_1x.jpg',
-      srcset: imgSizes.map(x=>'/img/'+filenumber+x),
-      alt: restaurant.photograph.alt
+      src: `/img/${imgName}_800_1x.webp`,
+      srcset: imgSizes.map(x=>'/img/'+imgName+x),
     });
   }
 

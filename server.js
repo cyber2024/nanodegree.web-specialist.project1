@@ -3,6 +3,8 @@ var app = express();
 var logger = require('morgan');
 var path = require('path');
 let fs = require('fs');
+let compression = require('compression');
+app.use(compression());
 
 app.set("port", process.env.PORT || 8000);
 

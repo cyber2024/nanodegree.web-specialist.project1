@@ -23,14 +23,14 @@ body {
 ul, li {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
-	color: #333;
+	color: #fff;
 }
 a {
 	color: orange;
 	text-decoration: none;
 }
 a:hover, a:focus {
-	color: #3397db;
+	color: #000;
 	text-decoration: none;
 }
 a img{
@@ -84,7 +84,8 @@ nav h1 a {
 
 /* Display list items side by side */
 #breadcrumb li {
-    display: inline;
+		display: inline;
+		color:#000;
 }
 
 /* Add a slash symbol (/) before/behind each list item */
@@ -115,7 +116,7 @@ nav h1 a {
 .filter-options {
   width: 100%;
   height: 50px;
-  background-color: #3397DB;
+  background-color: #000;
   align-items: center;
 }
 .filter-options h2 {
@@ -230,11 +231,12 @@ nav h1 a {
 }
 #restaurant-address {
   font-size: 12pt;
-  margin: 10px 0px;
+	margin: 10px 0px;
+	color:#fff;
 }
 #restaurant-cuisine {
   background-color: #333;
-  color: #ddd;
+  color: #fff;
   font-size: 12pt;
   font-weight: 300;
   letter-spacing: 10px;
@@ -279,14 +281,14 @@ nav h1 a {
   margin: 0 0 10px;
 }
 #restaurant-hours td {
-  color: #666;
+  color: #fff;
 }
 
 
 /* changes by Russell Elfenbein*/
 
 section{
-	background: #3397DB;
+	background: #000;
 }
 nav{
 	padding: 0 0 8px 0;
@@ -314,7 +316,7 @@ nav{
 		margin: 0 0 6px 0;
 	}
 	#restaurants-list{
-		background: #3397DB;
+		background: #000;
 		margin: 0;
 		padding: 0;
 		grid-column: 1/-1;
@@ -419,7 +421,7 @@ nav{
 		grid-template-rows: auto;
 		grid-column-gap: 4px;
 		grid-row-gap: 4px;
-		background: #3397DB;
+		background: #000;
 		margin: 0;
 		padding: 0;
 	}
@@ -533,7 +535,7 @@ nav{
 		grid-template-rows: auto;
 		grid-column-gap: 4px;
 		grid-row-gap: 4px;
-		background: #3397DB;
+		background: #000;
 		margin: 0;
 		padding: 0;
 		/* display: flex;
@@ -541,7 +543,7 @@ nav{
 		justify-content: space-around; */
 	}
 	#restaurants-list li{
-		border: 2px solid #3397DB;
+		border: 2px solid #000;
 		margin: 0 0 0 0;
 		padding: 0px;
 		width: 100%;

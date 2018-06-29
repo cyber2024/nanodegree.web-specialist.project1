@@ -1,21 +1,21 @@
-const CURRENT_VERSION = "4.0.10";
+const CURRENT_VERSION = "4.1.121";
 const CACHE_NAME = 'rr-cache-v' + CURRENT_VERSION;
 let urlsToCache = [
   '/',
-  '/css/styles.css',
-  '/restaurantdata',
-  '/index.html',
-  '/restaurant.html',
-  '/js/dbhelper.js',
-  '/js/index.js',
-  '/js/main.js',
-  '/js/restaurant_info.js'
+  './css/styles.css',
+  'http://localhost:1337/restaurants',
+  './index.html',
+  './restaurant.html',
+  './js/dbhelper.js',
+  './js/index.js',
+  './js/main.js',
+  './js/restaurant_info.js'
 ];
 for (let i = 1; i < 11; i++) {
-  urlsToCache.push('/img/' + i + '_450_1x.jpg');
-  urlsToCache.push('/img/' + i + '_600_1x.jpg');
-  urlsToCache.push('/img/' + i + '_800_1x.jpg');
-  urlsToCache.push('/img/' + i + '_1200_2x.jpg');
+  urlsToCache.push('/img/' + i + '_450_1x.webp');
+  urlsToCache.push('/img/' + i + '_600_1x.webp');
+  urlsToCache.push('/img/' + i + '_800_1x.webp');
+  urlsToCache.push('/img/' + i + '_1200_2x.webp');
 }
 
 const log = console.log.bind(console);
@@ -25,10 +25,10 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
     .then((cache) => {
-      log("cache opened", CACHE_NAME)
-      return cache.addAll(urlsToCache)
+      log("cache opened", CACHE_NAME, urlsToCache)
+      return cache.addAll(urlsToCache).catch(c=>console.error('couldnt add cache path', c))
     }).catch((error) => {
-      log('error', error);
+      log('error', CACHE_NAME, urlsToCache, error);
     })
   );
 });
@@ -47,17 +47,23 @@ self.addEventListener('activate', function(event) {
   );
 });
 self.addEventListener('fetch', (event) => {
-  let url = /restaurant.html\?.*?&?id=[a-zA-Z0-9]*&?.*?$/.test(event.request.url) ? '/restaurant.html': event.request;
+  //let request = /restaurant.html\?.*?&?id=[a-zA-Z0-9]*&?.*?$/.test(event.request.url) ? '/restaurant.html': event.request;
+  let request = event.request;
   event.respondWith(
-    caches.match(url)
-    .then((response) => {
-      if (response) {
-        log('Cache hit: ' + url);
-        return response;
-      } else {
-        log('Cache miss: ' + url);
-        return fetch(event.request);
-      }
-    })
+    caches.match(request)
+      .then(function(matchedResponse){
+        if (matchedResponse) {
+          return matchedResponse;
+        } 
+        return fetch(request).then(function(networkResponse){
+          return caches.open(CACHE_NAME).then(cache=>{
+            cache.put(request, networkResponse.clone());
+            return networkResponse;
+          })
+        });
+      }).catch(e=>{
+        console.error("Error in fetch handler: ", e);
+        throw e;
+      })
   )
 });
